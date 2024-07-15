@@ -23,7 +23,7 @@ hide_st_style = """
             header {visibility: hidden;}
             </style>
             """
-#st.markdown(hide_st_style, unsafe_allow_html=True)
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # Inject custom CSS to set the width of the sidebar
 st.markdown(
