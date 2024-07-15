@@ -133,7 +133,7 @@ board_pick = np.random.choice( list_boards )
 pieces_pick = np.random.choice( list_pieces )
 params = '?bg=dark&pieceSet=%s&theme=%s' % (pieces_pick,board_pick)
 
-st.components.v1.iframe(study_URL+params, width=350, height=320, scrolling=False)
+st.components.v1.iframe(study_URL+params, width=350, height=420, scrolling=False)
 
 col1, col2 = st.columns([0.3,0.7])
 col1.button("Refresh", type="primary")
