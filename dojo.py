@@ -52,6 +52,7 @@ for iii in range(len(df)):
         df['opening'][iii] = df['opening'][iii-1]
 # only keep rows with a URL
 df = df[df['url'].notnull()]
+df = df[ df['opening'].str.startswith('http')==False ]
 #st.dataframe(df)
 
 list_boards = [
@@ -133,8 +134,15 @@ board_pick = np.random.choice( list_boards )
 pieces_pick = np.random.choice( list_pieces )
 params = '?bg=dark&pieceSet=%s&theme=%s' % (pieces_pick,board_pick)
 
-st.components.v1.iframe(study_URL+params, width=350, height=480, scrolling=False)
+tab1, tab2 = st.tabs(["Small", "Large"])
 
-col1, col2 = st.columns([0.3,0.7])
-col1.button("Refresh", type="primary")
-col2.write(study_pick)
+with tab1:
+    st.components.v1.iframe(study_URL+params, width=350, height=480, scrolling=False)
+    col1, col2 = st.columns([0.3,0.7])
+    col1.button("Refresh", type="primary", key="refresh_button_1")
+    
+with tab2:
+    st.components.v1.iframe(study_URL+params, width=700, height=520, scrolling=False)
+    col1, col2 = st.columns([0.3,0.7])
+    col1.button("Refresh", type="primary", key="refresh_button_2")
+    col2.write(study_pick)
