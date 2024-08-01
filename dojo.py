@@ -120,6 +120,11 @@ all_openings = sorted(set(list(df['opening'])))
 selected_opening = [True for ooo in all_openings]
 for iii,ooo in enumerate(all_openings):
     selected_opening[iii] = st.sidebar.checkbox( ooo , value=True )
+# At this button to clear cache and refresh google sheet:
+def clear_cache():
+    st.cache_data.clear()
+    st.cache_resource.clear()
+st.sidebar.button("Refresh",on_click=clear_cache)
 
 # Pick a random study:
 allowed_openings = [ooo for ooo,sss in zip(all_openings,selected_opening) if sss==True]
@@ -139,10 +144,10 @@ tab1, tab2 = st.tabs(["Small", "Large"])
 with tab1:
     st.components.v1.iframe(study_URL+params, width=350, height=480, scrolling=False)
     col1, col2 = st.columns([0.3,0.7])
-    col1.button("Refresh", type="primary", key="refresh_button_1")
+    col1.button("New", type="primary", key="refresh_button_1")
     
 with tab2:
     st.components.v1.iframe(study_URL+params, width=700, height=520, scrolling=False)
     col1, col2 = st.columns([0.3,0.7])
-    col1.button("Refresh", type="primary", key="refresh_button_2")
+    col1.button("New", type="primary", key="refresh_button_2")
     col2.write(study_pick)
