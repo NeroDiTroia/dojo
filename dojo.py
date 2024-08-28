@@ -115,16 +115,28 @@ list_pieces = [
     "monarchy",
 ]
 
+# Button to untick all:
+def flip():
+    for iii,ooo in enumerate(all_openings):
+        st.session_state[ooo] = False
+    return None
+st.sidebar.button("Untick all",on_click=flip)
+
 # Filter studies in sidebar:
 all_openings = sorted(set(list(df['opening'])))
 selected_opening = [True for ooo in all_openings]
 for iii,ooo in enumerate(all_openings):
-    selected_opening[iii] = st.sidebar.checkbox( ooo , value=True )
-# At this button to clear cache and refresh google sheet:
+    if ooo not in st.session_state:
+        st.session_state[ooo] = True
+    selected_opening[iii] = st.sidebar.checkbox( ooo , value=st.session_state[ooo] )
+    
+# Add this button to clear cache and refresh google sheet:
 def clear_cache():
     st.cache_data.clear()
     st.cache_resource.clear()
 st.sidebar.button("Refresh",on_click=clear_cache)
+
+
 
 # Pick a random study:
 allowed_openings = [ooo for ooo,sss in zip(all_openings,selected_opening) if sss==True]
@@ -138,6 +150,7 @@ study_URL = study_pick.replace('/study/','/study/embed/')
 board_pick = np.random.choice( list_boards )
 pieces_pick = np.random.choice( list_pieces )
 params = '?bg=dark&pieceSet=%s&theme=%s' % (pieces_pick,board_pick)
+
 
 tab1, tab2 = st.tabs(["Small", "Large"])
 
